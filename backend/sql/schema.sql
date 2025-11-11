@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS usuarios (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    foto_perfil TEXT,
+    bio TEXT
+);
+CREATE TABLE IF NOT EXISTS posts (
+    id SERIAL PRIMARY KEY,
+    usuario_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+    texto TEXT NOT NULL,
+    imagen_url TEXT,
+    fecha TIMESTAMP DEFAULT NOW()
+);
+CREATE TABLE IF NOT EXISTS comentarios (
+    id SERIAL PRIMARY KEY,
+    post_id INTEGER NOT NULL REFERENCES posts(id) ON DELETE CASCADE,
+    usuario_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+    texto TEXT NOT NULL,
+    fecha TIMESTAMP DEFAULT NOW()
+);

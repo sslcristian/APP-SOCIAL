@@ -1,0 +1,15 @@
+const express = require('express');
+const cors = require('cors');
+const app = express();
+const port = process.env.PORT || 3000;
+const authRoutes = require('./routes/auth');
+const postsRoutes = require('./routes/posts');
+const commentsRoutes = require('./routes/comments');
+app.use(cors());
+app.use(express.json());
+app.use('/uploads', express.static('uploads'));
+app.get('/', (req, res) => res.send({ ok: true, msg: 'Backend funcionando 🎉' }));
+app.use('/api/auth', authRoutes);
+app.use('/api/posts', postsRoutes);
+app.use('/api/comments', commentsRoutes);
+app.listen(port, () => console.log(`Servidor corriendo en puerto ${port}`));
